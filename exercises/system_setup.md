@@ -26,7 +26,7 @@ Don't worry if your hardware does not fullfil the above requirements. The archiv
 
 The OpenFOAM version used in the course is OpenFOAM-**v2212** from *www.openfoam.com*. Older versions or other branches may not support all the required functionality. [Here](https://www.openfoam.com/news/main-news/openfoam-v2212) you find an overview of the installation options for both Windows and Linux-based systems.
 
-For Windows users, it is recommended to use *Windows Subsystem for Linux* (WSL) with Ubuntu. You may find the following two tutorials helpful:
+For Windows users, it is recommended to use *Windows Subsystem for Linux* (WSL) with Ubuntu. It will not be necessary to compile any code yourself, so the standard package installation is absolutely sufficient. You may find the following two tutorials helpful:
 
 - [How to install OpenFOAM in Windows 11 and Ubuntu](https://www.youtube.com/watch?v=CeEJS1eT9NE)
 - [How to install OpenFOAM in Windows 10 and Ubuntu](https://www.youtube.com/watch?v=w0bBOWlVlvA)
