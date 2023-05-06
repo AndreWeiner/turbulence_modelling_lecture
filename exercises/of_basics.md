@@ -17,9 +17,17 @@ Simulations of turbulent flows often create enormous amounts of data due to the 
 
 ## Laminar flow past a cylinder
 
-We simulate the laminar flow past a cylinder at $Re=100$ to explore the runtime postprocessing. The test case is located at *test_cases/cylinder2D* in the lecture repository. In case you cannot find the corresponding folder, refresh the repository's state by running `git pull` or download the repository again. To perform a simulation, it is advisable to create a copy of the base simulation in the run folder (`$FOAM_RUN`):
+We simulate the laminar flow past a cylinder at $Re=100$ to explore the runtime postprocessing. The test case is located at *test_cases/cylinder2D* in the lecture repository. In case you have not yet created a local copy of the lecture repository, [download](https://github.com/AndreWeiner/turbulence_modelling_lecture/archive/refs/heads/main.zip) the zip archive or run `git clone`:
+```
+# navigate to wherever you plan to work and run
+git clone git@github.com:AndreWeiner/turbulence_modelling_lecture.git
+# navigate to the lecture repository's top level
+cd turbulence_modelling_lecture
+```
+ In case you already copied the repository but cannot find the corresponding folder, refresh the repository's state by running `git pull` or download the repository again. To perform a simulation, it is advisable to create a copy of the base simulation in the run folder (`$FOAM_RUN`):
 ```
 # assuming you are at the repository's top level
+# (inside the turbulence_modelling_lecture folder)
 cp -r test_cases/cylinder2D $FOAM_RUN
 # navigate to the copy
 cd $FOAM_RUN/cylinder2D
@@ -28,7 +36,7 @@ Run time processing in OpenFOAM is implemented by means of so-called *function o
 
 ## Probes
 
-The [probes](https://www.openfoam.com/documentation/guides/latest/api/classFoam_1_1probes.html#details) function object allows to specify a number of points at which to sample one or more fields over time. The example below samples the pressure field at three different locations at every time step. Add the function object to your *controlDict* and add three more *probeLocations* located one diameter $d=0.1m$ further downstream the cylinder (the main flow direction is along the positive $x$-direction; keep the other two coordinates of the three additional locations the same).
+The [probes](https://www.openfoam.com/documentation/guides/latest/api/classFoam_1_1probes.html#details) function object allows to specify a number of points at which to sample one or more fields over time. The example below samples the pressure field at three different locations at every time step. Add the function object to your *controlDict* and add three more *probeLocations* located one diameter $d=0.1m$ further downstream the already specified probes (the main flow direction is along the positive $x$-direction; keep the other two coordinates of the three additional locations the same).
 ```
 probes
     {
@@ -77,7 +85,7 @@ A very common and important practice is the comparison between numerical and exp
 
         sets
         {
-            line1
+            line
             {
                 type    uniform;
                 axis    distance;
@@ -126,7 +134,7 @@ fieldAverage
 
 ## Analysis and visualization
 
-Now we are ready to run the simulation by executing the *Allrun* script. In case the simulation does not run as expected, check the *log.pimpleFoam* output, correct the *controlDict*, *Allclean* the case, and run the simulation again. This process has to be repeated until the solver runs as expected and computes $8s$ of flow evolution.
+Now we are ready to run the simulation by executing the *Allrun* script. In case the simulation does not run as expected, check the *log.pimpleFoam* output, correct the *controlDict*, *Allclean* the case, and run the simulation again. This process has to be repeated until the solver runs as expected and computes $8s$ of flow evolution. On a standard laptop or workstation, the simulation should take roughly 20min.
 
 ### First inspection in ParaView
 
