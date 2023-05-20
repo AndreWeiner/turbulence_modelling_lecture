@@ -13,19 +13,23 @@ In this exercise, we simulate one of the most fundamental canonical turbulent fl
 
 ## Experimental reference data
 
-The reference data comes from the experiments reported in **G. Comte-Bellot, S. Corrsin (1971):**
+The reference data comes from the experiments reported in [G. Comte-Bellot, S. Corrsin (1971)](https://doi.org/10.1017/S0022112071001599):
 > Simple Eulerian time correlation of full- and narrow-band velocity signals in grid-generated isotropic turbulence
 
 In the experiments, a grid with openings of $M = 5.08 cm$ ($2in$) is placed in a channel flow with an average inlet velocity of $\overline{U} = 10m/s$. The kinematic viscosity of air at room temperature is about $\nu =1.5\times 10^{-5} m^2/s$. The resulting Reynolds number is $Re=\overline{U}M/\nu = 34000$.
 
 Taylor postulated that the contribution of turbulent fluctuations to the advection of flow structures is small compared to the advection resulting from the mean flow (in homogeneous, statistically stationary flow). Based on his hypothesis, we can relate temporal to spatial fluctuations by means of the mean velocity $\overline{u}$:
+
 $$
   \partial_t (\dots) = \overline{u}\partial_x (\dots)
 $$
-The authors of the study mentioned above report the velocity fluctuations measured by several hot wires along the channel in terms of an energy spectrum (a discrete Fourier transformation). Relying on Taylor's hypothesis, they connect positions of the sensors downstream the grid to the time are a parcel of *frozen turbulence* has traveled along the channel:
+
+The authors of the study mentioned above report the velocity fluctuations measured by several hot wires along the channel in terms of an energy spectrum (a discrete Fourier transformation). Relying on Taylor's hypothesis, the authors connect positions of the sensors downstream the grid to the time a parcel of *frozen turbulence* has traveled along the channel:
+
 $$
   t - t_0 = (x-x_0) / \overline{U}
 $$
+
 and report the spectra at dimensionless times of $\tilde{t} = t\overline{U}/M = \{42, 98, 171\}$.
 
 The code snippet below contains the data extracted from table 3 of the reference and demonstrates the typical double-logarithmic visualization of these spectra.
@@ -61,7 +65,7 @@ plt.show()
 
 The simulation setup located *test_cases/decayIsoTurb_32* aims at reproducing the experimental results by computing the temporal evolution of an initial field of velocity fluctuations in a box (setup based on [this tutorial](https://www.openfoam.com/documentation/guides/latest/doc/verification-validation-turbulent-decay-homogeneous-isotropic-turbulence.html)). If Taylor's hypothesis is applicable, the decay of the spatial velocity fluctuations in the box should be comparable to the temporal fluctuations measures at various positions downstream the grid.
 
-The cubic domain has an edge length of $L=18\pi\ cm$. The *createBoxTurb* utility first creates a mesh and then imposes a velocity field based on a user-defined spectra, which is defined in the dictionary *constant/createBoxTurbDict*. We use the experimental spectrum at $\tilde{t}=42$ as starting point. The process of converting the spectrum into a divergence free velocity field is described in **T. Saad et al. (2016)**:
+The cubic domain has an edge length of $L=18\pi\ cm$. The *createBoxTurb* utility first creates a mesh and then imposes a velocity field based on a user-defined spectra, which is defined in the dictionary *constant/createBoxTurbDict*. We use the experimental spectrum at $\tilde{t}=42$ as starting point. The process of converting the spectrum into a divergence free velocity field is described in [T. Saad et al. (2016)](https://doi.org/10.2514/1.J055230):
 > Scalable tools for generating synthetic isotropic turbulence with arbitrary spectra
 
 Once the velocity field is initialized, the *pimpleFoam* flow solver computes the time evolution and writes snapshots every $0.01s$. The *energySpectrum* function object outputs the energy spectrum into the folder *postProcessing/energySpectrum* at the same write interval.
