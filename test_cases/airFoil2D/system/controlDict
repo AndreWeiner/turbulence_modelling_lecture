@@ -1,0 +1,171 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     simpleFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         5000;
+
+deltaT          1;
+
+writeControl    timeStep;
+
+writeInterval   100;
+
+purgeWrite      0;
+
+writeFormat     binary;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+functions
+{
+    turbulenceFields
+    {
+        type            turbulenceFields;
+        libs            (fieldFunctionObjects);
+        fields
+        (
+            k
+            epsilon
+            nut
+            nuEff
+            R
+            devReff
+            L
+            I
+        );
+        executeControl  writeTime;
+        writeControl    writeTime;
+    }
+
+    yPlus
+    {
+        type            yPlus;
+        libs            (fieldFunctionObjects);
+        patches         (aerofoil);
+        writeFields     true;
+        log             true;
+        executeControl  writeTime;
+        writeControl    writeTime;
+    }
+
+    wallShearStress
+    {
+        type            wallShearStress;
+        libs            (fieldFunctionObjects);
+        patches         (aerofoil);
+        writeFields     true;
+        log             true;
+        executeControl  writeTime;
+        writeControl    writeTime;
+    }
+
+    pressure
+    {
+        type            pressure;
+        libs            (fieldFunctionObjects);
+        mode            totalCoeff;
+        pInf            0.0;
+        rho             rhoInf;
+        rhoInf          1.0;
+        UInf            (51.4815 0 0);
+        executeControl  writeTime;
+        writeControl    writeTime;
+    }
+
+    forces
+    {
+        type            forceCoeffs;
+        libs            (forces);
+        patches         (aerofoil);
+        coefficients    (Cd Cl);
+        CofR            (0 0 0);
+        liftDir         (0 0 1);
+        dragDir         (1 0 0);
+        pitchAxis       (0 1 0);
+        rho             rhoInf;
+        rhoInf          1.0;
+        magUInf         51.4815;
+        lRef            1.0;
+        Aref            0.2;
+        executeControl  writeTime;
+        writeControl    writeTime;
+        log             true;
+    }
+
+    surface
+    {
+        type            surfaces;
+        libs            (sampling);
+        executeControl  writeTime;
+        writeControl    writeTime;
+        log             true;
+        surfaceFormat   raw;
+        fields          (total(p)_coeff yPlus wallShearStress);
+        surfaces
+        {
+            aerofoil
+            {
+                type            patch;
+                patches         (aerofoil);
+                interpolate     true;
+                invariant       true;
+            }
+        }
+    }
+
+    solverInfo
+    {
+        type            solverInfo;
+        libs            ("libutilityFunctionObjects.so");
+        fields          (U p nuTilda);
+        executeControl  timeStep;
+        executeInterval 1;
+        writeControl    timeStep;
+        writeInterval   1;
+    }
+    
+    fieldMinMax
+    {
+        // Mandatory entries (unmodifiable)
+        type        fieldMinMax;
+        libs        (fieldFunctionObjects);
+        mode        magnitude;
+        fields      (p U nuTilda);
+        location    true;
+        executeControl  timeStep;
+        executeInterval 1;
+        writeControl    timeStep;
+        writeInterval   1;
+    }
+}
+
+
+// ************************************************************************* //

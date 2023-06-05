@@ -1,0 +1,48 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+// inlet velocity vector corresponding to AoA of 10
+internalField   uniform (50.6994 0.00 8.9397);
+
+boundaryField
+{
+    inlet
+    {
+        type            freestreamVelocity;
+        freestreamValue $internalField;
+    }
+
+    outlet
+    {
+        type            freestreamVelocity;
+        freestreamValue $internalField;
+    }
+
+    aerofoil
+    {
+        type            noSlip;
+    }
+
+    "(front|back)"
+    {
+        type            empty;
+    }
+}
+
+
+// ************************************************************************* //

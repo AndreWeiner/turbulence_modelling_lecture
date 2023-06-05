@@ -1,0 +1,21 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+# create a copy of the original mesh
+geo_path="constant/geometry/"
+naca_geo="$FOAM_TUTORIALS"/resources/geometry/NACA0012.obj.gz
+mkdir -p $geo_path
+cp $naca_geo $geo_path
+runApplication blockMesh
+
+# decompose mesh
+restore0Dir
+runApplication decomposePar
+runParallel renumberMesh -overwrite
+
+# execute solver
+runParallel $(getApplication)
+
+#------------------------------------------------------------------------------
