@@ -16,8 +16,8 @@ The course consists of a series of lectures and accompanying practical exercises
 | 4 | **Canonical turbulent flows:** jet, mixing layer, wake, flat plate, pipe | [Link](https://andreweiner.github.io/turb-slides/canonical.html) |
 | 5 | **Direct numerical simulations:** numerical techniques, resolution requirements, selected results | [Link](https://andreweiner.github.io/turb-slides/dns.html) |
 | 6 | **RANS I:** eddy viscosity hypothesis, mixing length models | [Link](https://andreweiner.github.io/turb-slides/rans_1.html) |
-| 7 | **RANS II:** one- and two-equation models | [Link](https://andreweiner.github.io/turb-slides/rans_1.html) |
-| 8 | **RANS III:** modeling of anisotropic effects | [Link](https://andreweiner.github.io/turb-slides/rans_1.html) |
+| 7 | **RANS II:** one- and two-equation models | [Link](https://andreweiner.github.io/turb-slides/rans_2.html) |
+| 8 | **RANS III:** modeling of anisotropic effects | [Link](https://andreweiner.github.io/turb-slides/rans_3.html) |
 | 9 | **LES I:** filtered equations, resolution requirements | [Link](https://andreweiner.github.io/turb-slides/les.html) |
 | 10 | **LES II:** filters and subgrid-scale models | [Link](https://andreweiner.github.io/turb-slides/les.html) |
 | 11 | **LES III:** hybrid-RANS-LES methods | [Link](https://andreweiner.github.io/turb-slides/hybrid.html) |
