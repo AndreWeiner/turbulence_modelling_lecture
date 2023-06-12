@@ -1,0 +1,6 @@
+type            wallShearStress;
+libs            (fieldFunctionObjects);
+patches         (lowerWall upperWall);
+writeFields     false;
+log             false;
+writeControl    onEnd;

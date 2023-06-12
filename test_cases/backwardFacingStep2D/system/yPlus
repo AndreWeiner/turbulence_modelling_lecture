@@ -1,0 +1,7 @@
+type            yPlus;
+libs            (fieldFunctionObjects);
+patches         (lowerWall upperWall);
+writeFields     true;
+log             true;
+executeControl  writeTime;
+writeControl    writeTime;
