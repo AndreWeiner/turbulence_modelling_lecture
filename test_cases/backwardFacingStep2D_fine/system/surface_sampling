@@ -1,0 +1,16 @@
+type            surfaces;
+libs            (sampling);
+writeControl    onEnd;
+log             false;
+surfaceFormat   raw;
+fields          (cp wallShearStress);
+surfaces
+{
+    walls
+    {
+        type            patch;
+        patches         (lowerWall upperWall);
+        interpolate     true;
+        invariant       true;
+    }
+}
