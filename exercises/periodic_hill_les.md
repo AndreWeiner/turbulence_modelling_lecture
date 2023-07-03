@@ -61,3 +61,20 @@ Now we a ready to run the simulation. Once the simulation is complete, evaluate 
 - evaluate the near-wall resolution in terms of $y^+$ and $x^+/z^+$; for the streamwise and depth components, you can assume that $\Delta x^+ = \Delta z^+ = \sqrt{A}_f y^+/y_1$ ($A_f$ - face area of wall face, $y_1$ - distance of first cell center to the wall); the distance of the first cell center may be estimated by selecting and extracting a cell adjacent to the wall; the face area at the wall can be computed by selecting only the wall patch(es) and employing the *CellSize* filter; finally, the *Calculator* enables converting $y^+$ to $x^+$
 
 ## Part II: wall-modeled LES
+
+In the second part of this exercise, we will try to speed up the simulation created in the first part while keeping the accuracy roughly unchanged. The key ingredient to achieve this goal is a so-called wall functions. Wall functions allow placing the first cell center at a distance of $30 < y^+_1 < 200$ away from the wall. The particular wall function we employ is based on Spalding's function and could be applied also in the buffer or viscous layer without issues. Thanks to this reduced resolution requirement, we can perform the same simulation with significantly fewer cells.
+
+To get started, create a copy of the setup created in part I and run the *Allclean* script. To reduce the mesh resolution normal to the channel walls, the *system/blockMeshDict* needs to be modified. In the base mesh, the first cell layer had width such that $y^+_1 < 3$ for the top and bottom walls. Accordingly, when employing wall functions, the first cell width can be at least ten times larger. To reduce the resolution in $y$,
+
+1. reduce the number of cells in $y$
+2. reduce the grading towards to the top and bottom walls
+
+[This document](http://www.wolfdynamics.com/wiki/meshing_OF_blockmesh.pdf) provides a good introduction to *blockMesh*. Pages 33-36 explain the so-called multi-grading, which is employed in this test case. Remember that you can use ParaView to measure the width of the first cell graphically.
+
+In OpenFOAM, the wall function corrects the shear stress at the wall by modifying the eddy viscosity on the wall patch. Therefore, the wall function is applied as boundary condition to the *nut* field. Refer to the [documentation](https://doc.openfoam.com/2306/tools/processing/boundary-conditions/rtm/derived/wall/nutUSpaldingWallFunction/) of the *nutUSpaldingWallFunction* to find an example setup.
+
+After running the modified setup, compare the following quantities to the wall-resolved LES:
+
+- velocity profiles and Reynolds stresses
+- $y^+$ values at the top and bottom walls
+- execution time
